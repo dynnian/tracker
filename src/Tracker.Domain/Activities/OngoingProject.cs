@@ -1,4 +1,5 @@
 using Tracker.Domain.Entities;
+using Tracker.Domain.Exceptions;
 using Tracker.Domain.Properties;
 using Tracker.Domain.Validators;
 
@@ -7,16 +8,16 @@ namespace Tracker.Domain.Activities;
 public sealed class OngoingProject : IProject
 {
     public Guid Id { get; }
-    public string Name { get; private set; } = null!;
+    public string Name { get; private set; }
     public string? Description { get; private set; }
     public string? ProjectUrl { get; private set; }
-    public IApplicationUser Owner { get; } = null!;
+    public string Owner { get; } = null!;
     public Media? Icon { get; private set; }
-    public List<Media>? Files { get; }
-    public List<Subject>? RelatedSubjects { get; }
-    public List<Course>? RelatedCourses { get; }
-    public List<Competition>? RelatedCompetitions { get; }
-    public List<Certification>? RelatedCertifications { get; }
+    public List<Media> Files { get; }
+    public List<Subject> RelatedSubjects { get; }
+    public List<Course> RelatedCourses { get; }
+    public List<Competition> RelatedCompetitions { get; }
+    public List<Certification> RelatedCertifications { get; }
     public DateTime? StartDate { get; private set; }
     public DateTime CreatedAt { get; }
     public DateTime? UpdatedAt { get; private set; }
@@ -27,7 +28,7 @@ public sealed class OngoingProject : IProject
         string name, 
         string description, 
         string projectUrl, 
-        IApplicationUser owner,
+        string owner,
         Media? icon = null,
         List<Media>? files = null,
         List<Subject>? subjects = null,
@@ -41,16 +42,13 @@ public sealed class OngoingProject : IProject
         Description = description;
         ProjectUrl = projectUrl;
         Owner = owner;
+        ValidateIcon(icon);
         Icon = icon;
-        if (Icon != null && !FormatValidator.IsValidImageFileType(Icon.ContentType))
-        {
-            throw new ArgumentException("Invalid image file type.", nameof(icon));
-        }
-        Files = files ?? new();
-        RelatedSubjects = subjects ?? new();
-        RelatedCourses = courses ?? new();
-        RelatedCompetitions = competitions ?? new();
-        RelatedCertifications = certifications ?? new();
+        Files = files ?? [];
+        RelatedSubjects = subjects ?? [];
+        RelatedCourses = courses ?? [];
+        RelatedCompetitions = competitions ?? [];
+        RelatedCertifications = certifications ?? [];
         StartDate = startDate;
         CreatedAt = DateTime.Now;
     }
@@ -75,114 +73,58 @@ public sealed class OngoingProject : IProject
 
     public void UpdateIcon(Media icon)
     {
+        ValidateIcon(icon);
         Icon = icon;
-        if (!FormatValidator.IsValidImageFileType(Icon.ContentType))
-        {
-            throw new ArgumentException("Invalid image file type.", nameof(icon));
-        }
         UpdatedAt = DateTime.Now;
     }
 
-    public void AddFiles(List<Media> files)
+    public void AddFiles(List<Media> files) => AddItems(Files, files);
+
+    public void RemoveFiles(List<Media> files) => RemoveItems(Files, files);
+
+    public void AddSubjects(List<Subject> subjects) => AddItems(RelatedSubjects, subjects);
+
+    public void RemoveSubjects(List<Subject> subjects) => RemoveItems(RelatedSubjects, subjects);
+
+    public void AddCourses(List<Course> courses) => AddItems(RelatedCourses, courses);
+
+    public void RemoveCourses(List<Course> courses) => RemoveItems(RelatedCourses, courses);
+
+    public void AddCompetitions(List<Competition> competitions) => AddItems(RelatedCompetitions, competitions);
+
+    public void RemoveCompetitions(List<Competition> competitions) => RemoveItems(RelatedCompetitions, competitions);
+
+    public void AddCertifications(List<Certification> certifications) => AddItems(RelatedCertifications, certifications);
+
+    public void RemoveCertifications(List<Certification> certifications) => RemoveItems(RelatedCertifications, certifications);
+
+    private void ValidateIcon(Media? icon)
     {
-        if (files == null || files.Count == 0)
+        if (icon != null && !FileTypeValidator.IsValidImageFileType(icon.ContentType))
         {
-            throw new ArgumentException("No files provided.");
+            throw new InvalidImageFileTypeException("Invalid image file type.");
         }
-        foreach (var file in files)
+    }
+
+    private void AddItems<T>(List<T> targetList, List<T> items)
+    {
+        if (items == null || items.Count == 0)
         {
-            Files?.Add(file);
+            throw new NoItemsProvidedException("No items provided.");
         }
+        targetList.AddRange(items);
         UpdatedAt = DateTime.Now;
     }
 
-    public void RemoveFiles(List<Media> files)
+    private void RemoveItems<T>(List<T> targetList, List<T> items)
     {
-        if (files == null || files.Count == 0)
+        if (items == null || items.Count == 0)
         {
-            throw new ArgumentException("No files provided.");
+            throw new NoItemsProvidedException("No items provided.");
         }
-        foreach (var file in files)
+        foreach (var item in items)
         {
-            Files?.Remove(file);
-        }
-        UpdatedAt = DateTime.Now;
-    }
-
-    public void AddSubjects(List<Subject> subjects)
-    {
-        if (subjects == null || subjects.Count == 0)
-        {
-            throw new ArgumentException("No subjects provided.");
-        }
-        foreach (var subject in subjects)
-        {
-            RelatedSubjects?.Add(subject);
-        }
-        UpdatedAt = DateTime.Now;
-    }
-
-    public void RemoveSubjects(List<Subject> subjects)
-    {
-        if (subjects == null || subjects.Count == 0)
-        {
-            throw new ArgumentException("No subjects provided.");
-        }
-        foreach (var subject in subjects)
-        {
-            RelatedSubjects?.Remove(subject);
-        }
-        UpdatedAt = DateTime.Now;
-    }
-
-    public void AddCourses(List<Course> courses)
-    {
-        if (courses == null || courses.Count == 0)
-        {
-            throw new ArgumentException("No courses provided.");
-        }
-        foreach (var course in courses)
-        {
-            RelatedCourses?.Add(course);
-        }
-        UpdatedAt = DateTime.Now;
-    }
-
-    public void RemoveCourses(List<Course> courses)
-    {
-        if (courses == null || courses.Count == 0)
-        {
-            throw new ArgumentException("No courses provided.");
-        }
-        foreach (var course in courses)
-        {
-            RelatedCourses?.Remove(course);
-        }
-        UpdatedAt = DateTime.Now;
-    }
-
-    public void AddCompetitions(List<Competition> competitions)
-    {
-        if (competitions == null || competitions.Count == 0)
-        {
-            throw new ArgumentException("No competitions provided.");
-        }
-        foreach (var competition in competitions)
-        {
-            RelatedCompetitions?.Add(competition);
-        }
-        UpdatedAt = DateTime.Now;
-    }
-
-    public void RemoveCompetitions(List<Competition> competitions)
-    {
-        if (competitions == null || competitions.Count == 0)
-        {
-            throw new ArgumentException("No competitions provided.");
-        }
-        foreach (var competition in competitions)
-        {
-            RelatedCompetitions?.Remove(competition);
+            targetList.Remove(item);
         }
         UpdatedAt = DateTime.Now;
     }

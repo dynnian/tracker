@@ -9,6 +9,6 @@ public class Season
     public List<Episode> Episodes { get; set; } = new();
     public DateTime CreatedAt { get; set; } = DateTime.Now;
     public DateTime? UpdatedAt { get; set; } = null!;
-    public required IApplicationUser CreatedBy { get; set; } = null!;
-    public required IApplicationUser UpdatedBy { get; set; } = null!;
+    public required string CreatedBy { get; set; } = null!;
+    public required string UpdatedBy { get; set; } = null!;
 }

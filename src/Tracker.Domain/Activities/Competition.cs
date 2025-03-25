@@ -11,7 +11,7 @@ public class Competition
     public List<Tag>? Tags { get; set; } = new();
     public List<Subject>? Subjects { get; set; } = new();
     public List<Media>? Files { get; set; } = new();
-    public required IApplicationUser Participant { get; set; }
+    public required string Participant { get; set; }
     public string? CompetitionUrl { get; set; } = null!;
     public string? CertificateUrl { get; set; } = null!;
     public DateTime? StartDate { get; set; } = null!;

@@ -5,17 +5,62 @@ namespace Tracker.Domain.Activities;
 
 public class Course
 {
-    public int Id { get; set; }
-    public required string Name { get; set; }
-    public string? Description { get; set; } = null!;
-    public List<Tag>? Tags { get; set; } = new();
-    public List<Subject>? Subjects { get; set; } = new();
-    public List<Media>? Files { get; set; } = new();
-    public required IApplicationUser Owner { get; set; }
-    public required Visibility Visibility { get; set; } = Visibility.Public;
-    public string? CertificateUrl { get; set; } = null!;
-    public DateTime? StartDate { get; set; } = null!;
-    public DateTime? EndDate { get; set; } = null!;
-    public DateTime CreatedAt { get; set; } = DateTime.Now;
-    public DateTime? UpdatedAt { get; set; } = null!;
+    public Guid Id { get; private set; }
+    public string Name { get; private set; }
+    public string? Description { get; private set; }
+    public List<Tag> Tags { get; }
+    public List<Subject> Subjects { get; }
+    public List<Media> Files { get; }
+    public string Owner { get; }
+    public string? CertificateUrl { get; private set; }
+    public Media? Certificate { get; private set; }
+    public DateTime? StartDate { get; private set; }
+    public DateTime? EndDate { get; private set; }
+    public DateTime CreatedAt { get; }
+    public DateTime? UpdatedAt { get; private set; }
+
+    private Course() { }
+
+    public Course(
+        string name,
+        string owner,
+        string? description = null,
+        string? certificateUrl = null,
+        Media? certificate = null,
+        List<Tag>? tags = null,
+        List<Subject>? subjects = null,
+        List<Media>? files = null,
+        DateTime? startDate = null,
+        DateTime? endDate = null)
+    {
+        Id = Guid.NewGuid();
+        Name = name;
+        Owner = owner;
+        Description = description;
+        CertificateUrl = certificateUrl;
+        Certificate = certificate;
+        Tags = tags ?? [];
+        Subjects = subjects ?? [];
+        Files = files ?? [];
+        StartDate = startDate;
+        EndDate = endDate;
+        CreatedAt = DateTime.Now;
+    }
+
+    public void UpdateDetails(
+        string? name = null,
+        string? description = null,
+        string? certificateUrl = null,
+        Media? certificate = null,
+        DateTime? startDate = null,
+        DateTime? endDate = null)
+    {
+        Name = name ?? Name;
+        Description = description ?? Description;
+        CertificateUrl = certificateUrl ?? CertificateUrl;
+        Certificate = certificate ?? Certificate;
+        StartDate = startDate ?? StartDate;
+        EndDate = endDate ?? EndDate;
+        UpdatedAt = DateTime.Now;
+    }
 }

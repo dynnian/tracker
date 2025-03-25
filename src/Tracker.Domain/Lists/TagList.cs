@@ -7,5 +7,5 @@ public class TagList
 {
     public Guid Id { get; set; }
     public required List<Tag> Tags { get; set; } = new();
-    public required IApplicationUser Owner { get; set; } = null!;
+    public required string Owner { get; set; } = null!;
 }

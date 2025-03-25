@@ -6,5 +6,5 @@ public class Color
     public required string Name { get; set; } = null!;
     public required string Hex { get; set; } = null!;
     public DateTime CreatedAt { get; set; } = DateTime.Now;
-    public required IApplicationUser CreatedBy { get; set; } = null!;
+    public required string CreatedBy { get; set; } = null!;
 }

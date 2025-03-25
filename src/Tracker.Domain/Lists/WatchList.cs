@@ -6,5 +6,5 @@ public class WatchList
 {
     public Guid Id { get; set; } = Guid.NewGuid();
     public required List<Movie> Movies { get; set; } = new();
-    public required IApplicationUser Owner { get; set; }
+    public required string Owner { get; set; }
 }

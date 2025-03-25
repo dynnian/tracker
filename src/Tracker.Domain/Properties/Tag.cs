@@ -10,5 +10,5 @@ public class Tag
     public Color Color { get; set; } = null!;
     public List<object>? Entities { get; set; } = new();
     public DateTime CreatedAt { get; set; } = DateTime.Now;
-    public IApplicationUser? CreatedBy { get; set; } = null!;
+    public required string CreatedBy { get; set; } = null!;
 }

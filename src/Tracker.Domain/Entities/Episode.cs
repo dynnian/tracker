@@ -8,6 +8,6 @@ public class Episode
     public int Number { get; set; }
     public DateTime CreatedAt { get; set; } = DateTime.Now;
     public DateTime? UpdatedAt { get; set; } = null!;
-    public required IApplicationUser CreatedBy { get; set; } = null!;
-    public required IApplicationUser UpdatedBy { get; set; } = null!;
+    public required string CreatedBy { get; set; } = null!;
+    public required string UpdatedBy { get; set; } = null!;
 }

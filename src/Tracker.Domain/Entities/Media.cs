@@ -9,5 +9,5 @@ public class Media
     public required string FilePath { get; set; }
     public long FileSize { get; set; }
     public DateTime UploadedAt { get; set; } = DateTime.Now;
-    public IApplicationUser UploadedBy { get; set; } = null!;
+    public string UploadedBy { get; set; } = null!;
 }
