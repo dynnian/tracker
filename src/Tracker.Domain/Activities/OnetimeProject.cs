@@ -13,7 +13,10 @@ public sealed class OnetimeProject : IProject
     public IApplicationUser Owner { get; } = null!;
     public Media? Icon { get; private set; }
     public List<Media>? Files { get; private set; }
-    public List<Subject>? Subjects { get; private set; }
+    public List<Subject>? RelatedSubjects { get; private set; }
+    public List<Course>? RelatedCourses { get; private set; }
+    public List<Competition>? RelatedCompetitions { get; private set; }
+    public List<Certification>? RelatedCertifications { get; private set; }
     public DateTime? StartDate { get; private set; }
     public DateTime? EndDate { get; private set; }
     public DateTime CreatedAt { get; }
@@ -29,6 +32,9 @@ public sealed class OnetimeProject : IProject
         Media? icon = null,
         List<Media>? files = null,
         List<Subject>? subjects = null,
+        List<Course>? courses = null,
+        List<Competition>? competitions = null,
+        List<Certification>? certifications = null,
         DateTime? startDate = null,
         DateTime? endDate = null)
     {
@@ -43,7 +49,10 @@ public sealed class OnetimeProject : IProject
             throw new ArgumentException("Invalid image file type.", nameof(icon));
         }
         Files = files ?? new();
-        Subjects = subjects ?? new();
+        RelatedSubjects = subjects ?? new();
+        RelatedCourses = courses ?? new();
+        RelatedCompetitions = competitions ?? new();
+        RelatedCertifications = certifications ?? new();
         StartDate = startDate;
         EndDate = endDate;
         CreatedAt = DateTime.Now;
@@ -113,7 +122,7 @@ public sealed class OnetimeProject : IProject
         }
         foreach (var subject in subjects)
         {
-            Subjects?.Add(subject);
+            RelatedSubjects?.Add(subject);
         }
         UpdatedAt = DateTime.Now;
     }
@@ -126,7 +135,85 @@ public sealed class OnetimeProject : IProject
         }
         foreach (var subject in subjects)
         {
-            Subjects?.Remove(subject);
+            RelatedSubjects?.Remove(subject);
+        }
+        UpdatedAt = DateTime.Now;
+    }
+
+    public void AddCourses(List<Course> courses)
+    {
+        if (courses == null || courses.Count == 0)
+        {
+            throw new ArgumentException("No courses provided.");
+        }
+        foreach (var course in courses)
+        {
+            RelatedCourses?.Add(course);
+        }
+        UpdatedAt = DateTime.Now;
+    }
+
+    public void RemoveCourses(List<Course> courses)
+    {
+        if (courses == null || courses.Count == 0)
+        {
+            throw new ArgumentException("No courses provided.");
+        }
+        foreach (var course in courses)
+        {
+            RelatedCourses?.Remove(course);
+        }
+        UpdatedAt = DateTime.Now;
+    }
+
+    public void AddCompetitions(List<Competition> competitions)
+    {
+        if (competitions == null || competitions.Count == 0)
+        {
+            throw new ArgumentException("No competitions provided.");
+        }
+        foreach (var competition in competitions)
+        {
+            RelatedCompetitions?.Add(competition);
+        }
+        UpdatedAt = DateTime.Now;
+    }
+
+    public void RemoveCompetitions(List<Competition> competitions)
+    {
+        if (competitions == null || competitions.Count == 0)
+        {
+            throw new ArgumentException("No competitions provided.");
+        }
+        foreach (var competition in competitions)
+        {
+            RelatedCompetitions?.Remove(competition);
+        }
+        UpdatedAt = DateTime.Now;
+    }
+
+    public void AddCertifications(List<Certification> certifications)
+    {
+        if (certifications == null || certifications.Count == 0)
+        {
+            throw new ArgumentException("No certifications provided.");
+        }
+        foreach (var certification in certifications)
+        {
+            RelatedCertifications?.Add(certification);
+        }
+        UpdatedAt = DateTime.Now;
+    }
+
+    public void RemoveCertifications(List<Certification> certifications)
+    {
+        if (certifications == null || certifications.Count == 0)
+        {
+            throw new ArgumentException("No certifications provided.");
+        }
+        foreach (var certification in certifications)
+        {
+            RelatedCertifications?.Remove(certification);
         }
         UpdatedAt = DateTime.Now;
     }

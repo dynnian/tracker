@@ -12,7 +12,10 @@ public interface IProject
     public IApplicationUser Owner { get; }
     public Media? Icon { get; }
     public List<Media>? Files { get; }
-    public List<Subject>? Subjects { get; }
+    public List<Course>? RelatedCourses { get; }
+    public List<Subject>? RelatedSubjects { get; }
+    public List<Competition>? RelatedCompetitions { get; }
+    public List<Certification>? RelatedCertifications { get; }
     public DateTime? StartDate { get; }
     public DateTime CreatedAt { get; }
     public DateTime? UpdatedAt { get; }

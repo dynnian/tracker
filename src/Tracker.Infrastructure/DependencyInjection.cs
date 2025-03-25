@@ -82,7 +82,7 @@ public static class DependencyInjection
         {
             var connectionString = $"Server={host};Port={port};Database={dbName};Uid={user};Pwd={password}";
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
+                options.UseMySQL(connectionString));
         }
         else
         {

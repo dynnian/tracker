@@ -12,8 +12,11 @@ public sealed class OngoingProject : IProject
     public string? ProjectUrl { get; private set; }
     public IApplicationUser Owner { get; } = null!;
     public Media? Icon { get; private set; }
-    public List<Media>? Files { get; private set; }
-    public List<Subject>? Subjects { get; private set; }
+    public List<Media>? Files { get; }
+    public List<Subject>? RelatedSubjects { get; }
+    public List<Course>? RelatedCourses { get; }
+    public List<Competition>? RelatedCompetitions { get; }
+    public List<Certification>? RelatedCertifications { get; }
     public DateTime? StartDate { get; private set; }
     public DateTime CreatedAt { get; }
     public DateTime? UpdatedAt { get; private set; }
@@ -27,6 +30,10 @@ public sealed class OngoingProject : IProject
         IApplicationUser owner,
         Media? icon = null,
         List<Media>? files = null,
+        List<Subject>? subjects = null,
+        List<Course>? courses = null,
+        List<Competition>? competitions = null,
+        List<Certification>? certifications = null,
         DateTime? startDate = null)
     {
         Id = Guid.NewGuid();
@@ -40,6 +47,10 @@ public sealed class OngoingProject : IProject
             throw new ArgumentException("Invalid image file type.", nameof(icon));
         }
         Files = files ?? new();
+        RelatedSubjects = subjects ?? new();
+        RelatedCourses = courses ?? new();
+        RelatedCompetitions = competitions ?? new();
+        RelatedCertifications = certifications ?? new();
         StartDate = startDate;
         CreatedAt = DateTime.Now;
     }
@@ -94,6 +105,84 @@ public sealed class OngoingProject : IProject
         foreach (var file in files)
         {
             Files?.Remove(file);
+        }
+        UpdatedAt = DateTime.Now;
+    }
+
+    public void AddSubjects(List<Subject> subjects)
+    {
+        if (subjects == null || subjects.Count == 0)
+        {
+            throw new ArgumentException("No subjects provided.");
+        }
+        foreach (var subject in subjects)
+        {
+            RelatedSubjects?.Add(subject);
+        }
+        UpdatedAt = DateTime.Now;
+    }
+
+    public void RemoveSubjects(List<Subject> subjects)
+    {
+        if (subjects == null || subjects.Count == 0)
+        {
+            throw new ArgumentException("No subjects provided.");
+        }
+        foreach (var subject in subjects)
+        {
+            RelatedSubjects?.Remove(subject);
+        }
+        UpdatedAt = DateTime.Now;
+    }
+
+    public void AddCourses(List<Course> courses)
+    {
+        if (courses == null || courses.Count == 0)
+        {
+            throw new ArgumentException("No courses provided.");
+        }
+        foreach (var course in courses)
+        {
+            RelatedCourses?.Add(course);
+        }
+        UpdatedAt = DateTime.Now;
+    }
+
+    public void RemoveCourses(List<Course> courses)
+    {
+        if (courses == null || courses.Count == 0)
+        {
+            throw new ArgumentException("No courses provided.");
+        }
+        foreach (var course in courses)
+        {
+            RelatedCourses?.Remove(course);
+        }
+        UpdatedAt = DateTime.Now;
+    }
+
+    public void AddCompetitions(List<Competition> competitions)
+    {
+        if (competitions == null || competitions.Count == 0)
+        {
+            throw new ArgumentException("No competitions provided.");
+        }
+        foreach (var competition in competitions)
+        {
+            RelatedCompetitions?.Add(competition);
+        }
+        UpdatedAt = DateTime.Now;
+    }
+
+    public void RemoveCompetitions(List<Competition> competitions)
+    {
+        if (competitions == null || competitions.Count == 0)
+        {
+            throw new ArgumentException("No competitions provided.");
+        }
+        foreach (var competition in competitions)
+        {
+            RelatedCompetitions?.Remove(competition);
         }
         UpdatedAt = DateTime.Now;
     }
