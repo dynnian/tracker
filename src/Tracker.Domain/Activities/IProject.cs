@@ -9,7 +9,7 @@ public interface IProject
     public string Name { get; }
     public string? Description { get; }
     public string? ProjectUrl { get; }
-    public string Owner { get; }
+    public string OwnerUserId { get; }
     public Media? Icon { get; }
     public List<Media>? Files { get; }
     public List<Course>? RelatedCourses { get; }

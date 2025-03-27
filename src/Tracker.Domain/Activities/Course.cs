@@ -11,7 +11,7 @@ public class Course
     public List<Tag> Tags { get; }
     public List<Subject> Subjects { get; }
     public List<Media> Files { get; }
-    public string Owner { get; }
+    public string OwnerUserId { get; }
     public string? CertificateUrl { get; private set; }
     public Media? Certificate { get; private set; }
     public DateTime? StartDate { get; private set; }
@@ -35,7 +35,7 @@ public class Course
     {
         Id = Guid.NewGuid();
         Name = name;
-        Owner = owner;
+        OwnerUserId = owner;
         Description = description;
         CertificateUrl = certificateUrl;
         Certificate = certificate;

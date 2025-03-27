@@ -5,17 +5,45 @@ namespace Tracker.Domain.Activities;
 
 public class Competition
 {
-    public int Id { get; set; }
-    public required string Name { get; set; } = null!;
-    public string? Description { get; set; } = null!;
-    public List<Tag>? Tags { get; set; } = new();
-    public List<Subject>? Subjects { get; set; } = new();
-    public List<Media>? Files { get; set; } = new();
-    public required string Participant { get; set; }
-    public string? CompetitionUrl { get; set; } = null!;
-    public string? CertificateUrl { get; set; } = null!;
-    public DateTime? StartDate { get; set; } = null!;
-    public DateTime? EndDate { get; set; } = null!;
-    public DateTime CreatedAt { get; set; } = DateTime.Now;
-    public DateTime? UpdatedAt { get; set; } = null!;
+    public Guid Id { get; private set; }
+    public string Name { get; private set; }
+    public string? Description { get; set; }
+    public List<Tag>? Tags { get; set; }
+    public List<Subject>? Subjects { get; set; }
+    public List<Media>? Files { get; set; }
+    public required string OwnerUserId { get; set; }
+    public string? CompetitionUrl { get; set; }
+    public string? CertificateUrl { get; set; }
+    public DateTime? StartDate { get; set; }
+    public DateTime? EndDate { get; set; }
+    public DateTime CreatedAt { get; set; }
+    public DateTime? UpdatedAt { get; set; }
+
+    private Competition() { }
+
+    public Competition(
+        string name,
+        string ownerUserId,
+        string? description = null,
+        string? competitionUrl = null,
+        string? certificateUrl = null,
+        List<Tag>? tags = null,
+        List<Subject>? subjects = null,
+        List<Media>? files = null,
+        DateTime? startDate = null,
+        DateTime? endDate = null)
+    {
+        Id = Guid.NewGuid();
+        Name = name;
+        OwnerUserId = ownerUserId;
+        Description = description;
+        CompetitionUrl = competitionUrl;
+        CertificateUrl = certificateUrl;
+        Tags = tags ?? new();
+        Subjects = subjects ?? new();
+        Files = files ?? new();
+        StartDate = startDate;
+        EndDate = endDate;
+        CreatedAt = DateTime.Now;
+    }
 }

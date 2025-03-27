@@ -11,7 +11,7 @@ public sealed class OnetimeProject : IProject
     public string Name { get; private set; }
     public string? Description { get; private set; }
     public string? ProjectUrl { get; private set; }
-    public string Owner { get; }
+    public string OwnerUserId { get; }
     public Media? Icon { get; private set; }
     public List<Media> Files { get; }
     public List<Subject> RelatedSubjects { get; }
@@ -43,7 +43,7 @@ public sealed class OnetimeProject : IProject
         Name = name;
         Description = description;
         ProjectUrl = projectUrl;
-        Owner = owner;
+        OwnerUserId = owner;
         ValidateIcon(icon);
         Icon = icon;
         Files = files ?? [];
