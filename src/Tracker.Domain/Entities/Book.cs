@@ -1,4 +1,4 @@
-namespace Tracker.Domain.Entities;
+namespace Tracker.Domain.Settings;
 
 public class Book
 {

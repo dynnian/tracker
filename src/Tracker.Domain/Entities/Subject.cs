@@ -1,10 +1,10 @@
-namespace Tracker.Domain.Settings
+namespace Tracker.Domain.Entities
 {
-    public class Color
+    // Denotes the concepts, technologies, or topics covered in a project, course, competition, etc.
+    public class Subject
     {
-        public Guid Id { get; set; } = Guid.NewGuid();
+        public int Id { get; set; }
         public required string Name { get; set; } = null!;
-        public required string Hex { get; set; } = null!;
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         public required string CreatedBy { get; set; } = null!;
     }

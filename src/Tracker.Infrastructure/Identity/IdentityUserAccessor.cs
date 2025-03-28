@@ -1,23 +1,23 @@
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
-using Tracker.Domain.Entities;
-
-namespace Tracker.Infrastructure.Identity;
-
-public sealed class IdentityUserAccessor(
-    UserManager<ApplicationUser> userManager,
-    IdentityRedirectManager redirectManager)
+namespace Tracker.Infrastructure.Identity
 {
-    public async Task<ApplicationUser> GetRequiredUserAsync(HttpContext context)
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Identity;
+
+    public sealed class IdentityUserAccessor(
+        UserManager<ApplicationUser> userManager,
+        IdentityRedirectManager redirectManager)
     {
-        var user = await userManager.GetUserAsync(context.User);
-
-        if (user is null)
+        public async Task<ApplicationUser> GetRequiredUserAsync(HttpContext context)
         {
-            redirectManager.RedirectToWithStatus("Account/InvalidUser",
-                $"Error: Unable to load user with ID '{userManager.GetUserId(context.User)}'.", context);
-        }
+            var user = await userManager.GetUserAsync(context.User);
 
-        return user;
+            if (user is null)
+            {
+                redirectManager.RedirectToWithStatus("Account/InvalidUser",
+                    $"Error: Unable to load user with ID '{userManager.GetUserId(context.User)}'.", context);
+            }
+
+            return user;
+        }
     }
 }

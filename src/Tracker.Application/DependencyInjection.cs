@@ -1,11 +1,12 @@
-using Microsoft.Extensions.DependencyInjection;
-
-namespace Tracker.Application;
-
-public static class DependencyInjection
+namespace Tracker.Application
 {
-    public static IServiceCollection AddApplication(this IServiceCollection services)
+    using Microsoft.Extensions.DependencyInjection;
+
+    public static class DependencyInjection
     {
-        return services;
+        public static IServiceCollection AddApplication(this IServiceCollection services)
+        {
+            return services;
+        }
     }
 }

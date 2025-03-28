@@ -1,7 +1,8 @@
-namespace Tracker.Domain.Entities;
-
-public enum Visibility
+namespace Tracker.Domain.Settings
 {
-    Public,
-    Private
+    public enum Visibility
+    {
+        Public,
+        Private
+    }
 }
