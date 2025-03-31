@@ -1,28 +1,11 @@
 ﻿services:
-  tracker:
-    image: tracker
-    environment:
-      ASPNETCORE_ENVIRONMENT: "Production"
-      DB_HOST: "tracker-db"
-      DB_PORT: 5432
-      DB_NAME: "tracker"
-      DB_USER: "tracker"
-      DB_PASSWORD: "tracker"
-      DB_ENGINE: "postgres"
-    ports:
-      - "8080:8080"
-    restart: unless-stopped
-    depends_on:
-      - tracker-db
+  tracker-backend:
+    image: tracker-backend
     build:
       context: .
-      dockerfile: Dockerfile
-  tracker-db:
-    image: postgres:16
-    environment:
-      POSTGRES_USER: "tracker"
-      POSTGRES_PASSWORD: "tracker"
-      POSTGRES_DB: "tracker"
-    ports:
-      - "5432:5432"
-    restart: unless-stopped
+      dockerfile: src/Tracker.API/Dockerfile
+  tracker.frontend:
+    image: tracker-frontend
+    build:
+      context: .
+      dockerfile: src/Tracker.UI/Dockerfile

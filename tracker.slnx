@@ -1,0 +1,12 @@
+﻿<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path="README.md" />
+    <File Path="compose.yaml" />
+  </Folder>
+  <Project Path="src\Tracker.API\Tracker.API.csproj" Type="Classic C#" />
+  <Project Path="src\Tracker.Application\Tracker.Application.csproj" Type="Classic C#" />
+  <Project Path="src\Tracker.Domain\Tracker.Domain.csproj" Type="Classic C#" />
+  <Project Path="src\Tracker.Infrastructure\Tracker.Infrastructure.csproj" Type="Classic C#" />
+  <Project Path="src\Tracker.Shared\Tracker.Shared.csproj" Type="Classic C#" />
+  <Project Path="src\Tracker.UI\Tracker.UI.csproj" Type="Classic C#" />
+</Solution>

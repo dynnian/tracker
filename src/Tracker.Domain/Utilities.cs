@@ -1,6 +1,6 @@
 ﻿namespace Tracker.Domain
 {
-    using Tracker.Domain.Exceptions;
+    using Exceptions;
 
     // Just a class with some utility functions
     public static class Utilities

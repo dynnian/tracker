@@ -1,4 +1,4 @@
-namespace Tracker.Domain.Settings
+namespace Tracker.Domain.Entities
 {
     public class Show
     {

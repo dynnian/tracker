@@ -1,6 +1,6 @@
 namespace Tracker.Domain.Collections
 {
-    using Tracker.Domain.Entities;
+    using Entities;
 
     public class TagList
     {

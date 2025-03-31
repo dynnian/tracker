@@ -1,11 +1,43 @@
-namespace Tracker.Domain.Settings
+namespace Tracker.Domain.Entities
 {
     public class Color
     {
-        public Guid Id { get; set; } = Guid.NewGuid();
-        public required string Name { get; set; } = null!;
-        public required string Hex { get; set; } = null!;
-        public DateTime CreatedAt { get; set; } = DateTime.Now;
-        public required string CreatedBy { get; set; } = null!;
+        public Guid Id { get; private set; }
+        public string Name { get; private set; }
+        public string Hex { get; private set; }
+        public DateTime CreatedAt { get; private set; }
+        public string CreatedBy { get; private set; }
+
+        private Color() { }
+
+        public Color(
+            string name,
+            string hex,
+            string createdBy)
+        {
+            Id = Guid.NewGuid();
+            Name = name;
+            Hex = hex;
+            CreatedBy = createdBy;
+            CreatedAt = DateTime.Now;
+        }
+
+        public static Color Load(
+            Guid Id,
+            string name,
+            string hex,
+            string createdBy,
+            DateTime createdAt
+        )
+        {
+            return new Color
+            {
+                Id = Id,
+                Name = name,
+                Hex = hex,
+                CreatedBy = createdBy,
+                CreatedAt = createdAt
+            };
+        }
     }
 }

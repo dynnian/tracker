@@ -5,8 +5,8 @@ namespace Tracker.Infrastructure
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
-    using Tracker.Infrastructure.Context;
-    using Tracker.Infrastructure.Identity;
+    using Context;
+    using Identity;
 
     public static class DependencyInjection
     {

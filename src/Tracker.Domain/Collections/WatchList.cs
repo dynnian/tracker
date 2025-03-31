@@ -1,6 +1,6 @@
 namespace Tracker.Domain.Collections
 {
-    using Tracker.Domain.Settings;
+    using Entities;
 
     public class WatchList
     {

@@ -1,7 +1,5 @@
 namespace Tracker.Domain.Entities
 {
-    using Tracker.Domain.Settings;
-
     // Denotes the state of a given entity, such as a course, project, competition, etc.
     public class Tag
     {
