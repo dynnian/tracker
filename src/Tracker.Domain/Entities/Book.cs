@@ -51,8 +51,7 @@ namespace Tracker.Domain.Entities
             string? isbn = null,
             string? url = null,
             int? pages = null,
-            Media? cover = null
-        )
+            Media? cover = null)
         {
             Id = Guid.NewGuid();
             Title = !string.IsNullOrWhiteSpace(title)
