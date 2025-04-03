@@ -103,7 +103,7 @@ namespace Tracker.Domain.Entities
             UpdatedAt = DateTime.Now;
         }
 
-        public Show Load(
+        public static Show Load(
             Guid id,
             string createdBy,
             DateTime createdAt,

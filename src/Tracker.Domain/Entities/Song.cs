@@ -30,5 +30,79 @@
 
         // The ID of the user who last updated the song
         public string? UpdatedBy { get; private set; }
+        
+        private Song() { }
+        
+        public Song(
+            string title,
+            string createdBy,
+            Artist artist,
+            Album album,
+            string? genre = null,
+            TimeSpan? duration = null)
+        {
+            Id = Guid.NewGuid();
+            Title = !string.IsNullOrWhiteSpace(title)
+                ? title
+                : throw new ArgumentNullException(nameof(title), "Song title cannot be empty");
+            CreatedBy = !string.IsNullOrWhiteSpace(createdBy)
+                ? createdBy
+                : throw new ArgumentNullException(nameof(createdBy), "CreatedBy cannot be empty");
+            Artist = artist;
+            Album = album;
+            Genre = genre;
+            Duration = duration;
+            CreatedAt = DateTime.Now;
+        }
+        
+        public void UpdateDetails(
+            string updatedby,
+            string? title = null,
+            Artist? artist = null,
+            Album? album = null,
+            string? genre = null,
+            TimeSpan? duration = null)
+        {
+            Title = title ?? Title;
+            Artist = artist ?? Artist;
+            Genre = genre ?? Genre;
+            Album = album ?? Album;
+            Duration = duration ?? Duration;
+            UpdatedBy = !string.IsNullOrWhiteSpace(updatedby)
+                ? updatedby
+                : throw new ArgumentNullException(nameof(updatedby), "UpdatedBy cannot be empty");
+            UpdatedAt = DateTime.Now;
+        }
+        
+        public static Song Load(
+            Guid id,
+            string title,
+            string createdBy,
+            DateTime createdAt,
+            Album album,
+            Artist artist,
+            string? genre = null,
+            TimeSpan? duration = null,
+            string? updatedBy = null,
+            DateTime? UpdatedAt = null)
+        {
+            return new Song
+            {
+                Id = id,
+                Title = !string.IsNullOrWhiteSpace(title)
+                    ? title
+                    : throw new ArgumentNullException(nameof(title), "Title cannot be empty"),
+                Album = album,
+                Artist = artist,
+                Duration = duration,
+                Genre = genre,
+                CreatedAt = createdAt,
+                CreatedBy = !string.IsNullOrWhiteSpace(createdBy)
+                    ? createdBy
+                    : throw new ArgumentNullException(nameof(createdBy), "Createdby cannot be empty"),
+                UpdatedAt = UpdatedAt,
+                UpdatedBy = updatedBy,
+            };
+        }
     }
 }
